@@ -35,8 +35,8 @@ def pay_driver(state,a):
     else: return False
 
 pyhop.declare_operators(walk, call_taxi, ride_taxi, pay_driver)
-print('')
-pyhop.print_operators()
+#print('')
+#pyhop.print_operators()
 
 
 
@@ -51,8 +51,8 @@ def travel_by_taxi(state,a,x,y):
     return False
 
 pyhop.declare_methods('travel',travel_by_foot,travel_by_taxi)
-print('')
-pyhop.print_methods()
+#print('')
+#pyhop.print_methods()
 
 state1 = pyhop.State('state1')
 state1.loc = {'me':'home'}
@@ -60,20 +60,22 @@ state1.cash = {'me':20}
 state1.owe = {'me':0}
 state1.dist = {'home':{'park':8}, 'park':{'home':8}}
 
-print("""
-********************************************************************************
-Call pyhop.pyhop(state1,[('travel','me','home','park')]) with different verbosity levels
-********************************************************************************
-""")
 
-print("- If verbose=0 (the default), Pyhop returns the solution but prints nothing.\n")
-pyhop.pyhop(state1,[('travel','me','home','park')])
 
-print('- If verbose=1, Pyhop prints the problem and solution, and returns the solution:')
-pyhop.pyhop(state1,[('travel','me','home','park')],verbose=1)
+#print("""
+#********************************************************************************
+#Call pyhop.pyhop(state1,[('travel','me','home','park')]) with different verbosity levels
+#********************************************************************************
+#""")
 
-print('- If verbose=2, Pyhop also prints a note at each recursive call:')
-pyhop.pyhop(state1,[('travel','me','home','park')],verbose=2)
+#print("- If verbose=0 (the default), Pyhop returns the solution but prints nothing.\n")
+#pyhop.pyhop(state1,[('travel','me','home','park')])
+
+#print('- If verbose=1, Pyhop prints the problem and solution, and returns the solution:')
+#pyhop.pyhop(state1,[('travel','me','home','park')],verbose=1)
+
+#print('- If verbose=2, Pyhop also prints a note at each recursive call:')
+#pyhop.pyhop(state1,[('travel','me','home','park')],verbose=2)
 
 print('- If verbose=3, Pyhop also prints the intermediate states:')
 pyhop.pyhop(state1,[('travel','me','home','park')],verbose=3)
