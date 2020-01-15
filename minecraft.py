@@ -20,12 +20,22 @@ def use_ingredient(state, elem, num):
 	state.ingredients[elem] -= num
 	return state
 
+def use_time(state, num):
+	if state.time >= num:
+		state.time -= num
+		return state
+	else: return False
+
 def store_ingredient(state, elem, num):
 	#print("store_ingredient" + elem + str(num))
 	state.ingredients[elem] += num
 	return state
 
-pyhop.declare_operators(check_tool, check_ingredients, use_ingredient, store_ingredient)
+def store_tool(state, tool):
+	state.tool[tool] = True
+	return state
+
+pyhop.declare_operators(check_tool, check_ingredients, use_ingredient, store_ingredient, use_time)
 
 
 
@@ -55,14 +65,15 @@ def iron_axe_for_wood(state, num):
 
 
 def punch_for_wood(state, num):
-	#print("Punch for wood")
 	if state.time >= 4:
-		state.time -= 4
-		return[('check_ingredients', 'wood', num), ('store_ingredient', 'wood', 1)]	
-	else: return False
+		if num == 1:
+			return [('store_ingredient', 'wood', 1), ('use_time', 4)]
+		else:
+			return [('store_ingredient', 'wood', 1), ('use_time', 4), ('produce_wood', num - 1)]
 
 
-pyhop.declare_methods('produce_wood', punch_for_wood, iron_axe_for_wood, stone_axe_for_wood, wooden_axe_for_wood)
+#pyhop.declare_methods('produce_wood', punch_for_wood, iron_axe_for_wood, stone_axe_for_wood, wooden_axe_for_wood)
+pyhop.declare_methods('produce_wood', punch_for_wood)
 
 
 
@@ -72,10 +83,10 @@ pyhop.declare_methods('produce_wood', punch_for_wood, iron_axe_for_wood, stone_a
 state = pyhop.State('state1')
 state.ingredients = {'wood' : 0, 'plank' : 0, 'cobble' : 0, 'ingot' : 0, 'coal' : 0, 'ore' : 0, 'stick' : 0}
 state.tool = {'wooden_axe' : True, 'wooden_pickaxe' : False, 'stone_axe' : False, 'stone_pickaxe' : False, 'iron_axe' : False, 'iron_pickaxe' : False}
-state.time = 3
+state.time = 50
 
 
 if __name__ == '__main__':
 	print("starting")
-	pyhop.pyhop(state,[('produce_wood', 5)],verbose=3)
+	pyhop.pyhop(state,[('produce_wood', 5)],verbose=1)
 	
